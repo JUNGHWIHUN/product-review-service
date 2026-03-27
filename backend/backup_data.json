@@ -1,0 +1,175 @@
+[
+{
+  "model": "accounts.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$YDGqJsfbeJIMphKGWXdrfg$GsEhzn4EjbArgR96YqP1PKDyEfDtmb+ZpOPcTBNTROU=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "test",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-03-24T04:42:04.276Z",
+    "created_at": "2026-03-24T04:42:04.709Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$rXMKGUkyCSdLUUoRFb1lVT$0++LlywlAwwghrIFmh8Wpmb7DuT2EXy5YYySMfNczH4=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-03-26T06:09:26.906Z",
+    "created_at": "2026-03-26T06:09:27.294Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$QvC15DTLFRKJdt3erkT4gM$JPigVoczRxQf1X15j6cEyjEHPVy9+sxUNJYuiosZ2Gw=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "testuser3",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-03-27T01:09:23.010Z",
+    "created_at": "2026-03-27T01:09:23.301Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "products.product",
+  "pk": 2,
+  "fields": {
+    "name": "테스트 제품",
+    "description": "설명입니다",
+    "price": "12000.00",
+    "image": "",
+    "created_at": "2026-03-24T05:34:40.691Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 3,
+  "fields": {
+    "name": "상품 1",
+    "description": "상품 설명 1",
+    "price": "10000.00",
+    "image": "",
+    "created_at": "2026-03-24T06:21:48.269Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 4,
+  "fields": {
+    "name": "상품 2",
+    "description": "상품 설명 2",
+    "price": "20000.00",
+    "image": "",
+    "created_at": "2026-03-24T06:21:56.409Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 5,
+  "fields": {
+    "name": "상품 3",
+    "description": "상품 설명 3",
+    "price": "30000.00",
+    "image": "",
+    "created_at": "2026-03-24T06:22:02.346Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 6,
+  "fields": {
+    "name": "상품 4",
+    "description": "상품 설명 4",
+    "price": "40000.00",
+    "image": "",
+    "created_at": "2026-03-24T06:22:07.201Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 7,
+  "fields": {
+    "name": "상품 5",
+    "description": "상품 설명 5",
+    "price": "50000.00",
+    "image": "",
+    "created_at": "2026-03-24T06:22:13.208Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 8,
+  "fields": {
+    "name": "테스트 상품",
+    "description": "리뷰 테스트용 상품",
+    "price": "10000.00",
+    "image": "",
+    "created_at": "2026-03-26T06:09:40.972Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 9,
+  "fields": {
+    "name": "테스트 상품",
+    "description": "상품 설명",
+    "price": "10000.00",
+    "image": "products/cat.png",
+    "created_at": "2026-03-26T06:32:05.616Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 3,
+  "fields": {
+    "user": 2,
+    "product": 8,
+    "content": "테스트 리뷰입니다.",
+    "rating": 5,
+    "is_public": true,
+    "created_at": "2026-03-26T06:09:46.075Z",
+    "updated_at": "2026-03-26T06:09:46.075Z"
+  }
+},
+{
+  "model": "reviews.reviewai",
+  "pk": 1,
+  "fields": {
+    "review": 3,
+    "sentiment": "positive",
+    "confidence": 0.97,
+    "keywords": [
+      "배송",
+      "품질",
+      "만족"
+    ],
+    "created_at": "2026-03-26T06:14:52.579Z"
+  }
+}
+]
