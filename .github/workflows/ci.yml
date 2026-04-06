@@ -2,9 +2,12 @@ name: Monorepo CI (Django + FastAPI + Celery + Redis + Postgres)
 
 on:
   push:
-    branches: ["main", "develop"]
+    branches:
+      - main
+      - backend/dev
+      - ai-server/dev
   pull_request:
-    branches: ["main", "develop"]
+    branches: main
 
 jobs:
   app-tests:
