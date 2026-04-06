@@ -14,6 +14,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 import environ
+import os
 
 env = environ.Env()
 environ.Env.read_env(BASE_DIR / ".env")
@@ -26,12 +27,27 @@ from datetime import timedelta
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=k6flg5a_)^c!&xa&pxm=9drjumr9v9b54-+06#d0zy_78bz13'
+SECRET_KEY =  env(
+    "DJANGO_SECRET_KEY",
+    default="dev-secret-key"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool(
+    "DJANGO_DEBUG",
+    default=True
+)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list(
+    "DJANGO_ALLOWED_HOSTS",
+    default=["127.0.0.1", "localhost"]
+)
+
+DB_NAME = env("DB_NAME", default="product_review_db")
+DB_USER = env("DB_USER", default="product_review_user")
+DB_PASSWORD = env("DB_PASSWORD", default="product_review_password")
+DB_HOST = env("DB_HOST", default="db")
+DB_PORT = env("DB_PORT", default="5432")
 
 
 # Application definition
@@ -49,6 +65,8 @@ INSTALLED_APPS = [
     'apps.reviews',
     'apps.interactions',
     'apps.ai_gateway',
+    "apps.crawling",
+    "pgvector.django",
 ]
 
 MIDDLEWARE = [
@@ -87,11 +105,11 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("DB_NAME"),
-        "USER": env("DB_USER"),
-        "PASSWORD": env("DB_PASSWORD"),
-        "HOST": env("DB_HOST", default="localhost"),
-        "PORT": env("DB_PORT", default="5433"),
+        "NAME": DB_NAME,
+        "USER": DB_USER,
+        "PASSWORD": DB_PASSWORD,
+        "HOST": DB_HOST,
+        "PORT": DB_PORT,
     }
 }
 
@@ -118,9 +136,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "ko-kr"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
 
@@ -160,3 +178,28 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": False,
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
+
+FASTAPI_BASE_URL = env(
+    "FASTAPI_BASE_URL",
+    default="http://fastapi:8001"
+)
+
+REDIS_URL = env(
+    "REDIS_URL",
+    default="redis://redis:6379/0"
+)
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "Asia/Seoul"
+CELERY_RESULT_EXPIRES = 3600
+CELERY_WORKER_PREFETCH_MULTIPLIER = 1
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 60 * 10
+CELERY_TASK_SOFT_TIME_LIMIT = 60 * 8
+CELERY_TASK_ALWAYS_EAGER = os.getenv("CELERY_TASK_ALWAYS_EAGER", "False") == "True"
+CELERY_TASK_EAGER_PROPAGATES = True
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

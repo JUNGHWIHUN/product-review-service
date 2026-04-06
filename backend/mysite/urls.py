@@ -8,6 +8,8 @@ urlpatterns = [
     path("products/", include("apps.products.urls")),
     path("reviews/", include("apps.reviews.urls")),
     path("accounts/", include("apps.accounts.urls")),
+    path("ai/", include("apps.ai_gateway.urls")),
+    path("interactions/", include("apps.interactions.urls")),
 ]
 
 if settings.DEBUG:
