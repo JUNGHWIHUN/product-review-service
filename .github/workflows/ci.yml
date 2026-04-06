@@ -143,7 +143,7 @@ jobs:
           python manage.py check
 
       - name: Run migrations
-	        working-directory: backend
+        working-directory: backend
         run: |
           python manage.py migrate --noinput
 
