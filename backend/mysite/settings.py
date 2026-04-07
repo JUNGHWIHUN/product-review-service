@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'apps.ai_gateway',
     "apps.crawling",
     "pgvector.django",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -150,15 +151,30 @@ USE_TZ = True
 
 AUTH_USER_MODEL = "accounts.User"
 
-# 이미지 업로드 파일 접근 경로  
-MEDIA_URL = "/media/"   
-# 실제 업로드 파일 저장 폴더  
-MEDIA_ROOT = BASE_DIR / "media"
+# # 이미지 업로드 파일 접근 경로  
+# MEDIA_URL = "/media/"   
+# # 실제 업로드 파일 저장 폴더  
+# MEDIA_ROOT = BASE_DIR / "media"
 
-STATIC_URL = "/static/"  
+AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "ap-northeast-2")
+AWS_STORAGE_BUCKET_NAME_STATIC = os.getenv("AWS_STORAGE_BUCKET_NAME_STATIC")
+AWS_STORAGE_BUCKET_NAME_MEDIA = os.getenv("AWS_STORAGE_BUCKET_NAME_MEDIA")
+
+
+STATIC_URL = f"https://{AWS_STORAGE_BUCKET_NAME_STATIC}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/static/"
+MEDIA_URL = f"https://{AWS_STORAGE_BUCKET_NAME_MEDIA}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/media/"
+
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+STORAGES = {
+    "default": {
+        "BACKEND": "mysite.storage.MediaStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "mysite.storage.StaticStorage",
+    },
+}
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -204,3 +220,9 @@ CELERY_TASK_ALWAYS_EAGER = os.getenv("CELERY_TASK_ALWAYS_EAGER", "False") == "Tr
 CELERY_TASK_EAGER_PROPAGATES = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME")
+
+AWS_DEFAULT_ACL = None

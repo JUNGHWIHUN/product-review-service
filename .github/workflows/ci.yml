@@ -2,10 +2,7 @@ name: Monorepo CI (Django + FastAPI + Celery + Redis + Postgres)
 
 on:
   push:
-    branches:
-      - main
-      - backend/dev
-      - ai-server/dev
+    branches: ["main", "develop"]
   pull_request:
     branches: main
 
@@ -54,6 +51,13 @@ jobs:
       FASTAPI_BASE_URL: http://127.0.0.1:8001
 
       PYTHONUNBUFFERED: "1"
+
+      AWS_ACCESS_KEY_ID: dummy
+      AWS_SECRET_ACCESS_KEY: dummy
+      AWS_STORAGE_BUCKET_NAME_STATIC: product-review-static
+      AWS_STORAGE_BUCKET_NAME_MEDIA: product-review-media
+      AWS_S3_REGION_NAME: ap-northeast-2
+
 
     steps:
       - name: Checkout repository
@@ -228,6 +232,17 @@ jobs:
 
           REDIS_URL=redis://redis:6379/0
           FASTAPI_BASE_URL=http://fastapi:8001
+
+          
+          # ===============================
+          # [추가] S3 환경변수
+          # - docker compose 통합 테스트에서도 settings.py가 S3 값을 읽도록 추가
+          # ===============================
+          AWS_ACCESS_KEY_ID=dummy
+          AWS_SECRET_ACCESS_KEY=dummy
+          AWS_STORAGE_BUCKET_NAME_STATIC=product-review-static
+          AWS_STORAGE_BUCKET_NAME_MEDIA=product-review-media
+          AWS_S3_REGION_NAME=ap-northeast-2
           EOF
 
       - name: Show docker compose config
